@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
@@ -14,13 +14,25 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [fieldError, setFieldError] = useState({ username: '', password: '' });
     const router = useRouter();
-
-
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError(''); // مسح الخطأ السابق عند محاولة تسجيل الدخول من جديد
+        setFieldError({ username: '', password: '' }); // مسح الأخطاء الحقلية
+
+        // التحقق من الحقول
+        if (!username) {
+            setFieldError(prev => ({ ...prev, username: 'يرجى تعبئة اسم المستخدم' }));
+        }
+        if (!password) {
+            setFieldError(prev => ({ ...prev, password: 'يرجى تعبئة كلمة المرور' }));
+        }
+        if (!username || !password) {
+            return; // إذا كانت الحقول فارغة، لا تكمل عملية التسجيل
+        }
+
         try {
             if (!process.env.NEXT_PUBLIC_API_URL) {
                 throw new Error('API URL is not defined');
@@ -46,8 +58,10 @@ const Login = () => {
         const { name, value } = e.target;
         if (name === 'username') {
             setUsername(value);
+            if (value) setFieldError(prev => ({ ...prev, username: '' })); // مسح الخطأ عند تعبئة الحقل
         } else {
             setPassword(value);
+            if (value) setFieldError(prev => ({ ...prev, password: '' })); // مسح الخطأ عند تعبئة الحقل
         }
     };
 
@@ -75,7 +89,9 @@ const Login = () => {
                                     onChange={handleChange}
                                     dir='rtl'
                                 />
-
+                                {fieldError.username && (
+                                    <span className='text-red-500 text-sm'>{fieldError.username}</span>
+                                )}
                                 {error && (
                                     <span className='text-red-500 text-sm'>{error}</span>
                                 )}
@@ -91,12 +107,13 @@ const Login = () => {
                                     onChange={handleChange}
                                     dir='rtl'
                                 />
+                                {fieldError.password && (
+                                    <span className='text-red-500 text-sm'>{fieldError.password}</span>
+                                )}
                                 {error && (
                                     <span className='text-red-500 text-sm'>{error}</span>
                                 )}
                             </div>
-
-
 
                             <Button
                                 type='submit'
