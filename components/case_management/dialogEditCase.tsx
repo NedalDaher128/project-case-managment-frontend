@@ -7,6 +7,15 @@ import axios from "axios";
 import { useState } from "react";
 import toast from 'react-hot-toast';
 
+// تعريف نوع UpdatedCaseFields
+interface UpdatedCaseFields {
+  id: string;
+  caseNumber?: string;
+  defendantName?: string;
+  startDate?: string;
+  imprisonmentDuration?: string;
+}
+
 const ModalEditCase = ({ children, caseID }: DialogEditCaseProps) => {
   const [caseNumber, setCaseNumber] = useState('');
   const [accusedName, setAccusedName] = useState('');
@@ -15,7 +24,7 @@ const ModalEditCase = ({ children, caseID }: DialogEditCaseProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedFields: Record<string, any> = { id: caseID };
+    const updatedFields: UpdatedCaseFields = { id: caseID.toString() }; // استخدام النوع المخصص
 
     if (caseNumber) updatedFields.caseNumber = caseNumber;
     if (accusedName) updatedFields.defendantName = accusedName;
@@ -53,7 +62,6 @@ const ModalEditCase = ({ children, caseID }: DialogEditCaseProps) => {
         break;
       case 'caseDate':
         setCaseDate(value);
-        
         break;
       case 'casePrisonDate':
         setCasePrisonDate(value);

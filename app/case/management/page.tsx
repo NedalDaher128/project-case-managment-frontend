@@ -23,6 +23,7 @@ import DialogEditCase from "@/components/case_management/dialogEditCase";
 
 const Page = () => {
     interface Case {
+        id: string;
         caseNumber: string;
         defendantName: string;
         imprisonmentDuration: number;
@@ -76,7 +77,7 @@ const Page = () => {
 
 
     // Define columns with useMemo
-    const columns = useMemo<ColumnDef<any>[]>(
+    const columns = useMemo<ColumnDef<Case>[]>(
         () => [
             { accessorKey: 'id', header: 'رقم التتبع' },
             { accessorKey: 'caseNumber', header: 'رقم القضية' },
@@ -99,7 +100,7 @@ const Page = () => {
                 cell: (info) => {
                     return (
                         <div className="flex justify-center items-center w-[50px]">
-                            <DialogEditCase caseID={info.row.original.id}>
+                            <DialogEditCase caseID={Number(info.row.original.id)}>
                                 <Image src={'/edit.svg'} width={24} height={24} alt="" />
                             </DialogEditCase>
                         </div>
@@ -124,7 +125,6 @@ const Page = () => {
     // Pagination Controls
     const handleNextPage = () => table.nextPage();
     const handlePreviousPage = () => table.previousPage();
-    const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => setPageSize(Number(e.target.value));
 
     return (
         <div className="flex flex-col items-center h-[110vh] space-y-4">

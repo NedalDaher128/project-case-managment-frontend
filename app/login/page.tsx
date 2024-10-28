@@ -1,6 +1,5 @@
 'use client';
 
-import './styles.scss';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
@@ -17,12 +16,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    useEffect(() => {
-        const token = Cookies.get('token');
-        if (token) {
-            router.push('/');
-        }
-    }, [router]);
+
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

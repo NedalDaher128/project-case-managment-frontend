@@ -27,7 +27,7 @@ const Page = () => {
             if (!process.env.NEXT_PUBLIC_API_URL) {
                 throw new Error('API URL is not defined');
             }
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cases/add`, { caseNumber, defendantName: accusedName, startDate: caseDate, imprisonmentDuration: casePrisonDate });
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/cases/add`, { caseNumber, defendantName: accusedName, startDate: caseDate, imprisonmentDuration: casePrisonDate });
             toast.success('تم إضافة القضية بنجاح');
 
         } catch (error) {

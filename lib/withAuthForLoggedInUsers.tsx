@@ -1,28 +1,20 @@
-// lib/withAuthHOC.js
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
-import { ComponentType } from 'react';
-
-export function withAuthForLoggedInUsers(Component: ComponentType) {
-    interface AuthenticatedComponentProps {
-        [key: string]: any;
-    }
-
-    return function AuthenticatedComponent(props: AuthenticatedComponentProps) {
+export function withAuthForLoggedInUsers<P>(Component: React.ComponentType<P>) {
+    return function AuthenticatedComponent(props: P) {
         const router = useRouter();
 
         useEffect(() => {
-            const token = Cookies.get('token');
-
-            // إعادة توجيه إذا لم يكن هناك كعكة
-            if (token) {
-                router.replace('/');
+            if (typeof window !== 'undefined') {
+                const token = Cookies.get('token');
+                if (!token) {
+                    router.push('/login');
+                }
             }
-        }, []);
+        }, [router]);
 
-        // عرض المكون فقط إذا كانت الكعكة موجودة
-        return <Component {...props} />;
+        return <Component {...(props as P & JSX.IntrinsicAttributes)} />;
     };
 }
