@@ -85,7 +85,7 @@ export default function Navbar() {
 
                 </li>
                 <li>
-                    <Link href={'http://localhost:4000/'}>
+                    <Link href={'/'}>
                         <Image src='/logo.png' alt='logo' width={242} height={100} />
                     </Link>
                 </li>
