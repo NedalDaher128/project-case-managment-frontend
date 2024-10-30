@@ -4,7 +4,6 @@
 
 .container_items {
     display: flex;
-    height: 758px;
     justify-content: center;
     align-items: center;
     align-content: center;

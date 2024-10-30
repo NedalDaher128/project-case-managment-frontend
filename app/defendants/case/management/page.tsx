@@ -29,6 +29,8 @@ const Page = () => {
         imprisonmentDuration: number;
         startDate: string;
         caseID: string;
+        member_location:string;
+        member_number:string;
     }
 
     const [data, setData] = useState<Case[]>([]);
@@ -79,7 +81,7 @@ const Page = () => {
     // Define columns with useMemo
     const columns = useMemo<ColumnDef<Case>[]>(
         () => [
-            { accessorKey: 'id', header: 'رقم التتبع' },
+            { accessorKey: 'id', header: 'رقم مسلسل' },
             { accessorKey: 'caseNumber', header: 'رقم القضية' },
             { accessorKey: 'defendantName', header: 'اسم المتهم' },
             { accessorKey: 'imprisonmentDuration', header: 'مدة الحبس' },
@@ -94,7 +96,19 @@ const Page = () => {
                     return renewalDate.toLocaleDateString('ar-EG');
                 }
             },
-            
+            {
+                accessorKey:'member_location',
+                header:'مكان التجديد'
+
+            },
+            {
+                accessorKey:'member_number',
+                header:'رقم العضو'
+            },
+            {
+                accessorKey:'type_case',
+                header:'نوع القضية'
+            },
             {
                 header: 'تعديل',
                 cell: (info) => {

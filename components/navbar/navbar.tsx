@@ -75,7 +75,7 @@ export default function Navbar() {
                         {
 
                             names.map((name) => (
-                                <Link className=' text-lg' key={name} href={name === 'مواعيد تجديد المتهمين' ? '/case/management' : '/case/add'}>
+                                <Link className=' text-lg' key={name} href={name === 'تجديد المتهمين' ? '/defendants/home' : '/case/404'}>
                                     {name}
                                 </Link>
                             ))
@@ -85,7 +85,9 @@ export default function Navbar() {
 
                 </li>
                 <li>
-                    <Image src='/logo.png' alt='logo' width={242} height={100} />
+                    <Link href={'http://localhost:4000/'}>
+                        <Image src='/logo.png' alt='logo' width={242} height={100} />
+                    </Link>
                 </li>
             </ul>
         </nav>
